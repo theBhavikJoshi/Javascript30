@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <style>
+  	@import url('https://fonts.googleapis.com/css?family=Spectral+SC:400');
+  	body {
+  		background: #000000;  /* fallback for old browsers */
+		background: -webkit-linear-gradient(to right, #53346D, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to right, #53346D, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  		font-family: 'Spectral SC', serif;;
+  		font-weight: 400;
+  		color: white;
+  	}
+  	.container{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+  	}
+	#heading {
+		font-size: 36px;
+		align-items: flex-start;
+		color: #FCAC0C;
+	}
+	#stars {
+	  font-size: 120px;
+	  max-height: 300px;
+	  color: #FCAC0C;
+	}
+	#footer {
+		align-items: flex-end;
+		text-align: center;
+	}
+	p {
+		display: inline;
+	}
+  </style>
+</head>
+<body>
+	<div class="container">
+		<h2 id="heading">Cheat Codes</h2>
+		<h5 class='elements' id="stars"></h5>
+		<p class='elements' id="footer">
+			Don't worry! (Wanna Know CheatCodes?) <br />
+			The cheatcode to decrease is : <strong>decrease</strong> 😉( Haha, It was hard, no?) <br />
+			The cheatcode to increase is : <strong>increase</strong> 😉 (Again!! 😎)
+		</p>
+	</div>
+<script>
+	const keysPressedI = [];
+	const keysPressedD = [];
+	let starCount = 0;
+	const decreaseCode = 'decrease';
+	const increaseCode = `increase`;
+
+	const stars = document.querySelector('#stars');
+	window.addEventListener('keyup', (e) => {
+		keysPressedD.push(e.key);
+		keysPressedD.splice( -keysPressedD.length -1, keysPressedD.length - decreaseCode.length );
+		if( keysPressedD.join('').includes(decreaseCode) ) {
+			decreaseStars();
+		}
+	});
+	window.addEventListener('keyup', (e) => {
+		keysPressedI.push(e.key);
+		keysPressedI.splice( -keysPressedI.length -1, keysPressedI.length - increaseCode.length );
+		if( keysPressedI.join('').includes(increaseCode) ) {
+			increaseStars();
+		}
+	});
+
+	function increaseStars() {
+		starCount++;
+		const id = `star${starCount}`;
+		const adStar = `<p id='${id}'>&#x2605;</p>`;
+		stars.innerHTML += adStar;
+	}
+	function decreaseStars() {
+		if(starCount > 0) {
+			let elem = document.querySelector(`#star${starCount}`);
+			elem.remove();
+			starCount--;
+		}
+	}
+
+</script>
+</body>
+</html>

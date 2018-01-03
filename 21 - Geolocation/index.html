@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+  <div class="wrapper">
+    <h1 class="latitude">
+      <p>Latitude</p>
+      <p class="lat">0</p>
+    </h1>
+    <h1 class="longitude">
+      <p>Longitude</p>
+      <p class="lng">0</p>
+    </h1>
+  </div>
+
+  <style>
+    html {
+      font-size: 100px;
+    }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height:100vh;
+      background: #ECE9E6;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: black;
+    }
+    .wrapper {
+      margin: 
+    }
+    h1 {
+      display: inline-block;
+      font-weight: 100;
+      font-size: 48px;
+      margin: 50px;
+    }
+
+    .units {
+      font-size: 15px;
+    }
+    /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
+  </style>
+  <script>
+
+    const lat = document.querySelector('.lat');
+    const lng = document.querySelector('.lng');
+
+    navigator.geolocation.getCurrentPosition((data) => {
+      console.log(data);
+      lat.textContent = data.coords.latitude;
+      lng.textContent = data.coords.longitude;
+    }, (err) => {
+      console.log(err);
+      alert('Please Allow access to device location!');
+    });
+
+  </script>
+</body>
+</html>

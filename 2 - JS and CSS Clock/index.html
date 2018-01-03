@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+    <h1>CSS + JS Clock</h1>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background:#018DED url('background.jpeg');
+      font-family:'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display:flex;
+      flex:1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 6rem;
+      font-family: serif;
+      color: white;
+      text-align: center;
+      position: absolute;
+      left: 40vw;
+      top: 5vh;
+    }
+
+    .clock {
+      width: 25rem;
+      height: 25rem;
+      border:8px solid white;
+      border-radius:50%;
+      margin:50px auto;
+      position: relative;
+      padding:2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width:50%;
+      height:6px;
+      background:white;
+      position: absolute;
+      top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0, 0, 0, 0.63);
+    }
+
+  </style>
+
+  <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    function setTime() {
+      // Get Date!
+      const currentTime = new Date();
+
+      // Get Current Seconds, Minutes and Hours
+      const currentSecond = currentTime.getSeconds();
+      const currentMinute = currentTime.getMinutes();
+      const currentHour = currentTime.getHours();
+
+      // Convert Values to Degrees
+      const secondsDegree = (( currentSecond / 60 ) * 360 ) + 90;
+      const minutesDegree = (( currentMinute / 60 ) * 360 ) + ((currentSecond / 60 ) * 6 ) + 90;
+      const hoursDegree = (( currentHour / 12 ) * 360 ) + ((currentMinute / 60 ) * 30 ) + 90;
+
+      // Apply Stylings
+      secondHand.style.transform = `rotate(${secondsDegree}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDegree}deg)`;
+      hourHand.style.transform = `rotate(${hoursDegree}deg)`;
+    };
+
+    setInterval(setTime, 1000);
+
+  </script>
+</body>
+</html>

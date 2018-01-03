@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+	<h1>Look..👀 There's a Canvas! Lets Draw on it!🖍👇</h1>
+	<canvas id="draw" width="800" height="800"></canvas>
+<script>
+
+	const canvas = document.querySelector('#draw');
+	const context = canvas.getContext('2d');
+
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight-120;
+
+	context.strokeStyle = '#1B3C68';
+	context.lineJoin = 'bevel';
+	context.lineCap = 'butt';
+	context.lineWidth = 40;
+
+	let isDrawing = false;
+	let lastX = 0;
+	let lastY = 0;
+	let hue = 0;
+	let direction = true;
+
+	function drawOnCanvas (e) {
+		if(!isDrawing) return;
+		context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+		context.lineWidth = hue;
+		context.beginPath();
+		context.moveTo(lastX, lastY);
+		context.lineTo(e.offsetX, e.offsetY);
+		context.stroke();
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+		hue++;
+		if(hue >= 360) hue =0;
+		if(context.lineWidth > 70 || context.lineWidth <= 1) {
+			direction = !direction;
+		}
+		if(direction) context.lineWidth++;
+		else context.lineWidth--;
+	}
+
+	canvas.addEventListener('mousemove', drawOnCanvas);
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+	canvas.addEventListener('mouseup', () => isDrawing = false);
+	canvas.addEventListener('mouseout', () => isDrawing = false);
+
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Spectral+SC:400');
+  html, body {
+    margin:0;
+    background: #78C2C3;
+  }
+  h1 {
+  	text-align: center;
+	font-family: 'Spectral SC', serif;
+	color: #0D1B4C;
+  }
+  p {
+  	text-align: center;
+  	font-size: 20px;
+  }
+  canvas {
+  	border: 1px solid grey;
+  	padding: 0;
+  	margin: 0;
+  }
+</style>
+
+</body>
+</html>

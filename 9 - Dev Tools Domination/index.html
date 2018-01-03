@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Spectral+SC:400');
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      background: #141E30;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    p {
+      font-family: 'Spectral SC', serif;;
+      font-weight: 400;
+      font-size: 2rem;
+      color: #E3D9CA;
+    }
+  </style>
+</head>
+<body>
+
+  <p><em>There's nothing here.. Again! (That's Third time now!)  </em> 🐱‍👤</p>
+  <p><em>Atleast now, Have a look at the Console</em> 👇</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    // clearing
+    console.clear();
+
+    // Regular
+    console.log("This is just a Regular Console Log! C'mon! You know this one!😜");
+
+    // Interpolated
+    console.log("Hey.. This word here 👉 '%s' is interploated in this log message! Believe me! No? Check out the code then!", 'INTERPOLATED-MESSAGE');
+
+    // Styled
+    console.log("%c This is a Statement styled directly in Console!", 'color: blue; font-size: 15px;');
+
+    // warning!
+    console.warn('Here is a Warning! Your favorite football team is going to lose this week!');
+
+    // Error :|
+    console.error("Here is an Error! Your current project have a massive bug! It won't run!");
+
+    // Info
+    console.info("Here is a quick word to know! 'Librocubicularist' is a person who reads in bed! Cool word! ");
+
+    // Testing
+    console.assert(3 === -3, "See! I told you, 3 is not the same as -3! You should've listened to me");
+
+    // Viewing DOM Elements
+    const p = document.querySelector('p');
+    console.log(p);
+    console.log('The Above one is a DOM Element!👆 and the below one is a DOM element as listing all the constituents 👇');
+    console.dir(p)
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This Dog is named, ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.groupEnd(`${dog.name}`);
+    });
+
+    // counting
+    console.count('Bhavik');
+    console.count('Joshi');
+    console.count('Joshi');
+    console.count('Bhavik');
+    console.count('Bhavik');
+    console.count('Bhavik');
+    console.count('Joshi');
+    console.count('Joshi');
+    console.count('Bhavik');
+    console.count('Joshi');
+
+    // timing
+    console.time('Fetching Some Data');
+    fetch('https://api.github.com/users/bhavikjoshi07')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('Fetching Some Data');
+        console.log(data);
+      });
+
+    // Table
+    console.table(dogs);
+
+  </script>
+</body>
+</html>
