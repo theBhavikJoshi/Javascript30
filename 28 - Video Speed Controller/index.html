@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div class="wrapper">
+    <video class="flex" width="765" height="430" src="http://mirror.cessen.com/blender.org/peach/trailer/trailer_iphone.m4v" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+
+	const video = document.querySelector('video');
+	const speed = document.querySelector('.speed');
+	const speedBar = document.querySelector('.speed-bar');
+
+	function handleMouseMove (e) {
+		const min = 0.4;
+		const max = 4;
+
+		const y = e.pageY - this.offsetTop;
+		const percent = y / this.offsetHeight;
+		const height = Math.round(percent * 100) + '%';
+		const playbackRate = percent * (max - min) + min ;
+
+		speedBar.style.height = height;
+		speedBar.textContent = playbackRate.toFixed(1) + 'x';
+		video.playbackRate = playbackRate;
+		console.log(playbackRate);
+	}
+
+	speed.addEventListener('mousemove', handleMouseMove);
+
+</script>
+</body>
+</html>
