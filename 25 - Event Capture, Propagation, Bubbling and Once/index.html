@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <h1 style="text-align: center;">Hi! All About <span style="background-color: #00BBF0">Events</span> by <a href="https://codepen.io/theBhavikJoshi/" style="background-color: #FF7F50; text-decoration: none;">Bhavik Joshi</a></h1>
+
+  <h3 style="text-align: center;">You, Probably should have your Console Open!</h3>
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+  <button>You can click me just once! After that, Nothing will Happen!</button>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Spectral+SC:400');
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  body {
+    font-family: 'Spectral SC', serif;;
+    font-weight: 400;
+    background-color: #D9FAFF;
+  }
+  
+  h3 {
+    margin-bottom: 5%;
+  }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: #00204A;
+  }
+
+  .two {
+    background:#005792;
+  }
+
+  .three {
+    background:#00BBF0;
+  }
+
+  button {
+    font-family: 'Spectral SC', serif;;
+    font-weight: 400;
+    font-size: 16px;
+    background-color: #D9FAFF;
+    margin: 20px 40%;
+  }
+</style>
+<script>
+  const allDivs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText (e) {
+    console.log(this.classList.value);
+    // e.stopPropagation();
+  }
+
+  allDivs.forEach( div => div.addEventListener('click', logText, {
+    capture: false
+  }) );
+
+  button.addEventListener('click', () => {
+    alert(`That's it! I'm not listening to you again!`);
+    console.log('You clicked that Button!');
+  }, {
+    once: true
+  });
+</script>
+</body>
+</html>
