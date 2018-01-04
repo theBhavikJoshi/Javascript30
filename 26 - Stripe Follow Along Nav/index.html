@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Follow Along Nav</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Follow Along Dropdown Nav</h2>
+  <br>
+  <nav class="top">
+    <div class="dropdownBackground">
+      <span class="arrow"></span>
+    </div>
+
+    <ul class="cool">
+      <li>
+        <a href="#">About Me</a>
+        <div class="dropdown dropdown1">
+          <div class="bio">
+            <p>Hi! This is Bhavik Joshi! A Full Stack Web Developer from India. I love everything that has to do with Web Development, be it developing responsive front end websites or writing efficient code for the back end logic of a website/web app.</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#">Development</a>
+        <ul class="dropdown courses">
+          <li>
+            <span class="code">Github</span>
+            <a href="https://github.com/theBhavikJoshi">Github Profile</a>
+          </li>
+          <li>
+            <span class="code">Codepen</span>
+            <a href="https://codepen.io/theBhavikJoshi">Codepen Profile</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Social Links</a>
+        <ul class="dropdown dropdown3">
+          <li><a class="button" href="https://twitter.com/theBhavikJoshi">Twiter</a></li>
+          <li><a class="button" href="https://www.facebook.com/BhavikJoshi07">Facebook</a></li>
+          <li><a class="button" href="https://angel.co/thebhavikjoshi">Angel</a></li>
+          <li><a class="button" href="https://www.linkedin.com/in/thebhavikjoshi/">LinkedIn</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+<script>
+
+  const liTriggers = document.querySelectorAll('.cool > li');
+  const background = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('nav');
+
+  function handleEnter () {
+    console.log('Enter!');
+    this.classList.add('trigger-enter');
+    setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+    background.classList.add('open');
+
+    const dropdown = this.querySelector('.dropdown');
+    const dropCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    const coords = {
+      height: dropCoords.height,
+      width: dropCoords.width,
+      top: dropCoords.top - navCoords.top,
+      left: dropCoords.left - navCoords.left
+    }
+
+    background.style.setProperty('width', `${coords.width}px`);
+    background.style.setProperty('height', `${coords.height}px`);
+    background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px )`);
+
+  }
+
+  function handleLeave () {
+    console.log('Leave!');
+    this.classList.remove('trigger-enter');
+    setTimeout(() => this.classList.remove('trigger-enter-active'), 150);
+    background.classList.remove('open');
+  }
+
+  liTriggers.forEach( trigger => trigger.addEventListener('mouseenter', handleEnter) );
+  liTriggers.forEach( trigger => trigger.addEventListener('mouseleave', handleLeave) );
+
+</script>
+
+</body>
+</html>
