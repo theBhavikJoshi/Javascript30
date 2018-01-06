@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h5 class="highScoreNotification"></h5>
+  <h1>Whack-a-mole! Score : <span class="score">0</span></h1>
+  <h4>Highest Score : <span class="highScore"></span></h4>
+  <button onClick="startGame()">Start!</button>
+
+  <div class="game">
+    <div class="hole hole1">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole2">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole3">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole4">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole5">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole6">
+      <div class="mole"></div>
+    </div>
+  </div>
+
+<script>
+  const holes = document.querySelectorAll('.hole');
+  const scoreBoard = document.querySelector('.score');
+  const highScoreBoard = document.querySelector('.highScore');
+  const moles = document.querySelectorAll('.mole');
+  const notification = document.querySelector('.highScoreNotification');
+  let lastHole;
+  let timeUp = false;
+  let score = 0;
+  let highScore = localStorage.getItem('highScore') || 0;
+
+  highScoreBoard.textContent = highScore;
+
+  function randomTime (min, max) {
+    return Math.round( Math.random() * ( max - min ) + min );
+  }
+
+  function randomHole (holes) {
+    const randomId = Math.floor( Math.random() * holes.length );
+    const hole = holes[randomId];
+    
+    if(hole === lastHole) {
+      console.log('Nope!');
+      return randomHole(holes);
+    }
+
+    lastHole = hole;
+    return hole;
+  }
+
+  function getItUp () {
+    const time = randomTime(200, 1000);
+    const hole = randomHole(holes);
+
+    hole.classList.add('up');
+    setTimeout(() => {
+      hole.classList.remove('up');
+      if (!timeUp) getItUp();
+    }, time);
+  }
+
+  function startGame () {
+    scoreBoard.textContent = 0;
+    timeUp = false;
+    score = 0;
+    getItUp();
+    setTimeout(() => {
+      timeUp = true;
+      highScoreUpdate(score);
+      highScore = localStorage.getItem('highScore');
+      highScoreBoard.textContent = highScore;
+    }, 10000);
+  }
+
+  function bonkIt (e) {
+    if(!e.isTrusted) return;
+    score++;
+    this.classList.remove('up');
+    scoreBoard.textContent = score;
+  }
+
+  function highScoreUpdate (score) {
+    if(score > highScore) {
+      localStorage.setItem('highScore', score);
+      notification.textContent = 'High Score Updated!';
+      setTimeout(() => notification.textContent = '', 2000 );
+    }
+  }
+
+  moles.forEach(mole => mole.addEventListener('click', bonkIt));
+
+</script>
+</body>
+</html>
